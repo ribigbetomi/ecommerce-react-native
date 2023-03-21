@@ -2,7 +2,15 @@ import { Center, Heading, Text } from "native-base";
 import React from "react";
 import Colors from "../color";
 
-const OrderInfo = ({ icon, title, subTitle, text, success, danger }) => {
+const OrderInfo = ({
+  icon,
+  title,
+  subTitle,
+  text,
+  success,
+  danger,
+  children,
+}) => {
   return (
     <Center
       bg={Colors.white}
@@ -38,16 +46,14 @@ const OrderInfo = ({ icon, title, subTitle, text, success, danger }) => {
       {success && (
         <Center py={2} mt={2} rounded={5} w="full" bg={Colors.blue}>
           <Text fontSize={12} color={Colors.white}>
-            {" "}
-            Paid in jan 12 2022
+            {children}
           </Text>
         </Center>
       )}
       {danger && (
         <Center py={2} mt={2} rounded={5} w="full" bg={Colors.red}>
           <Text fontSize={12} color={Colors.white}>
-            {" "}
-            Not Deliver
+            {children}
           </Text>
         </Center>
       )}

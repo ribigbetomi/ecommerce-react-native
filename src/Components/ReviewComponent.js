@@ -15,37 +15,50 @@ import RatingComponent from "./RatingComponent";
 import Buttons from "./Buttons";
 import Colors from "../color";
 import Message from "./NotificationsComponent";
+import { createProductReview } from "./../../Redux/Actions/ProductActions";
+import { useDispatch } from "react-redux";
 
-const ReviewComponent = () => {
+const ReviewComponent = ({ numReviews, productId }) => {
   const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
+  const review = { rating, comment };
+  const dispatch = useDispatch();
 
+  // console.log(review);
+  // console.log(comment);
+
+  const createReview = () => {
+    dispatch(createProductReview(review, productId));
+  };
   const reviews =
     "this product is one of the best products I have ever have, this product is one of the best products I have ever have, this product is one of the best products I have ever have, this product is one of the best products I have ever have,";
 
   const noReviews = "sorry there is no reviews yet";
   return (
     <Box my={9}>
-      <Heading bold fontSize={15} mb={2}>
+      {/* <Heading bold fontSize={15} mb={2}>
         Reviews
-      </Heading>
+      </Heading> */}
       {/*If there is no reviews */}
-      <Message
-        color={Colors.main}
-        size={15}
-        bg={Colors.deepGray}
-        Children={noReviews}
-        bold
-      />
+      {/* {!numReviews && (
+        <Message
+          color={Colors.main}
+          size={15}
+          bg={Colors.deepGray}
+          Children={noReviews}
+          bold
+        />
+      )} */}
 
       {/*if there is reviews*/}
-      <Box p={3} bg={Colors.deepGray} mt={5} rounded={5}>
+      {/* <Box p={3} bg={Colors.deepGray} mt={5} rounded={5}>
         <Heading fontSize={15} color={Colors.black}>
           User Doe
         </Heading>
         <RatingComponent value={4} size={12} />
         <Text my={2}>Jan 12 2022</Text>
         <Message color={Colors.black} size={12} Children={reviews} />
-      </Box>
+      </Box> */}
       {/*add review button */}
 
       <Box mt={6}>
@@ -96,14 +109,20 @@ const ReviewComponent = () => {
               h={24}
               w="full"
               bg={Colors.deepGray}
-              placeholder="This product is good ..."
+              value={comment}
+              onChange={(e) => setComment(e.nativeEvent.text)}
+              placeholder="Please drop a nice comment"
               py={4}
               _focus={{
                 bg: Colors.subGreen,
               }}
             />
           </FormControl>
-          <Buttons bg={Colors.main} color={Colors.white}>
+          <Buttons
+            bg={Colors.main}
+            color={Colors.white}
+            onPress={() => createReview()}
+          >
             SUBMIT
           </Buttons>
           {/*if not login */}

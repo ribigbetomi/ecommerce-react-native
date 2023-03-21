@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import { Text } from "react-native";
 import {
   Box,
@@ -13,9 +13,36 @@ import {
 import Colors from "./../color";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../Redux/Actions/UserActions";
+import Message from "../Components/loadingError/Error";
+import Loading from "../Components/loadingError/Loading";
 
-function LoginScreen() {
+function LoginScreen({ route }) {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const confirm = route.params;
+  // console.log(email, "em", password, "pass");
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { error, loading, userInfo } = userLogin;
+  // console.log(userInfo, "ui");
+
+  useEffect(() => {
+    // if (userInfo && !confirm) {
+    //   navigation.navigate("Cart");
+    // } else
+    if (userInfo) {
+      navigation.navigate("Bottom");
+    }
+  }, [userInfo, navigation]);
+
+  const loginHandler = (email, password) => {
+    dispatch(login(email, password));
+  };
+
   return (
     <Box flex={1} bg={Colors.black}>
       <Image
@@ -38,6 +65,8 @@ function LoginScreen() {
         <Heading>LOGIN</Heading>
 
         <VStack space={5} pt="6">
+          {error && <Message variant={Colors.red}>{error}</Message>}
+          {loading && <Loading>Loading...</Loading>}
           {/* EMAIL */}
           <Input
             InputLeftElement={
@@ -50,6 +79,8 @@ function LoginScreen() {
             type="text"
             color={Colors.main}
             borderBottomColor={Colors.underline}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
           {/* PASSWORD */}
           <Input
@@ -63,6 +94,8 @@ function LoginScreen() {
             pl={2}
             color={Colors.main}
             borderBottomColor={Colors.underline}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
         </VStack>
         <Button
@@ -73,7 +106,8 @@ function LoginScreen() {
           w="40%"
           rounded={50}
           bg={Colors.main}
-          onPress={() => navigation.navigate("Bottom")}
+          // onPress={() => navigation.navigate("Bottom")}
+          onPress={() => loginHandler(email, password)}
         >
           LOGIN
         </Button>

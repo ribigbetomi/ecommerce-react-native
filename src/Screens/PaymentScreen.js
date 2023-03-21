@@ -13,29 +13,37 @@ import { useNavigation } from "@react-navigation/native";
 import Buttons from "../Components/Buttons";
 import Colors from "../color";
 import { TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
+import { savePaymentMethod } from "../../Redux/Actions/CartActions";
 
 const PaymentScreen = ({ navigation }) => {
-  const [active, setActive] = useState("");
-  const [isDisabled, setIsDisabled] = useState(!active ? true : false);
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const isDisabled = !paymentMethod ? true : false;
 
-  const paymentMethod = [
-    {
-      image: require("../../assets/paypal.png"),
-      alt: "paypal",
-      Icons: "Ionicons",
-    },
-    {
-      image: require("../../assets/discover.png"),
-      alt: "discover",
-      Icons: "fontAwesome",
-    },
-    {
-      image: require("../../assets/googlepay.png"),
-      alt: "googlepay",
-      Icons: "fontAwesome",
-    },
-  ];
+  const dispatch = useDispatch();
 
+  // const paymentMethod = [
+  //   {
+  //     image: require("../../assets/paypal.png"),
+  //     alt: "paypal",
+  //     Icons: "Ionicons",
+  //   },
+  //   {
+  //     image: require("../../assets/discover.png"),
+  //     alt: "discover",
+  //     Icons: "fontAwesome",
+  //   },
+  //   {
+  //     image: require("../../assets/googlepay.png"),
+  //     alt: "googlepay",
+  //     Icons: "fontAwesome",
+  //   },
+  // ];
+
+  const submitHandler = () => {
+    dispatch(savePaymentMethod(paymentMethod));
+    navigation.navigate("PlaceOrder");
+  };
   return (
     <Box flex={1} safeAreaTop bg={Colors.main} py={5}>
       {/* Header */}
@@ -48,49 +56,49 @@ const PaymentScreen = ({ navigation }) => {
       <Box h="full" px="5" bg={Colors.deepGray}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <VStack space={6} mt={5}>
-            {paymentMethod.map((i, index) => (
-              <TouchableOpacity onPress={() => setActive(i.alt)}>
-                <HStack
-                  alignItems="center"
-                  justifyContent="space-between"
-                  px={1}
-                  py={1}
-                  rounded={10}
-                  bg={Colors.white}
-                >
-                  <Image
-                    source={i.image}
-                    alt={i.alt}
-                    resizeMode="contain"
-                    w={120}
-                    h={50}
+            {/* {paymentMethod.map((i, index) => ( */}
+            <TouchableOpacity onPress={() => setPaymentMethod("Paystack")}>
+              <HStack
+                alignItems="center"
+                justifyContent="space-between"
+                px={1}
+                py={1}
+                rounded={10}
+                bg={Colors.white}
+              >
+                <Image
+                  source={require("../../assets/paystack.png")}
+                  alt="Paystack"
+                  resizeMode="contain"
+                  w={120}
+                  h={50}
+                />
+                {paymentMethod === "Paystack" ? (
+                  <Ionicons
+                    name="checkmark-circle"
+                    size={30}
+                    color={Colors.main}
                   />
-                  {active === i.alt ? (
-                    <Ionicons
-                      name="checkmark-circle"
-                      size={30}
-                      color={Colors.main}
-                    />
-                  ) : (
-                    <FontAwesome
-                      name="circle-thin"
-                      size={30}
-                      color={Colors.main}
-                    />
-                  )}
-                </HStack>
-              </TouchableOpacity>
-            ))}
+                ) : (
+                  <FontAwesome
+                    name="circle-thin"
+                    size={30}
+                    color={Colors.main}
+                  />
+                )}
+              </HStack>
+            </TouchableOpacity>
+            {/* // ))} */}
             <Buttons
               color={Colors.white}
-              bg={Colors.main}
-              onPress={() => navigation.navigate("PlaceOrder")}
+              bg={isDisabled ? Colors.gray : Colors.main}
+              onPress={submitHandler}
               disabled={isDisabled}
             >
               CONTINUE
             </Buttons>
             <Text italic textAlign="center">
-              Payment Method IS <Text bold>Paypal</Text> by default
+              Payment Method IS <Text bold>Paystack</Text> by default
             </Text>
           </VStack>
         </ScrollView>

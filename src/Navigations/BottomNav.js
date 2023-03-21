@@ -13,6 +13,9 @@ import ProfileScreen from "./../Screens/ProfileScreen";
 import CartScreen from "./../Screens/CartScreen";
 import StackNav from "./StackNav";
 import Colors from "../color";
+import { useNavigation } from "@react-navigation/native";
+import LoginScreen from "../Screens/LoginScreen";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,6 +35,16 @@ const CustomTab = ({ children, onPress }) => (
 );
 
 const BottomNav = () => {
+  const navigation = useNavigation();
+
+  function isAuthenticated() {
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+    if (userInfo) {
+      return true;
+    }
+  }
+
   return (
     <Tab.Navigator
       backBehavior="main"
@@ -85,9 +98,10 @@ const BottomNav = () => {
         }}
       />
       {/* Profile */}
+      {/* {isAuthenticated() ? ( */}
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={isAuthenticated() ? ProfileScreen : LoginScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Center>
@@ -100,6 +114,9 @@ const BottomNav = () => {
           ),
         }}
       />
+      {/* ) : (
+        navigation.navigate("Login")
+      )} */}
     </Tab.Navigator>
   );
 };

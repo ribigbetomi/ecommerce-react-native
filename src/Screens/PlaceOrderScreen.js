@@ -5,22 +5,29 @@ import Colors from "./../color";
 import OrderInfo from "../Components/OrderInfo";
 import PlaceOrderModel from "../Components/PlaceOrderModel";
 import OrderTerm from "../Components/OrderTerm";
+import { useSelector } from "react-redux";
 
 const PlaceOrderScreen = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress, paymentMethod } = cart;
+
   return (
     <Box bg={Colors.subGreen} flex={1} safeArea pt={6}>
       <Box>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <OrderInfo
             title="CUSTOMER"
-            subTitle="Admin Doe"
-            text="admin@example.com"
+            subTitle={userInfo ? userInfo.name : ""}
+            text={userInfo ? userInfo.email : ""}
             icon={<FontAwesome name="user" size={30} color={Colors.white} />}
           />
           <OrderInfo
             title="SHIPPING INFO"
-            subTitle="SHIPPING: Tanzania"
-            text="Payment Method: Paypal"
+            subTitle={`SHIPPING: ${shippingAddress.country}`}
+            text={`Payment Method: ${paymentMethod}`}
             icon={
               <FontAwesome5
                 name="shipping-fast"
@@ -31,8 +38,8 @@ const PlaceOrderScreen = () => {
           />
           <OrderInfo
             title="DELIVER TO"
-            subTitle="Address:"
-            text="this is Dumyy address"
+            subTitle={`Address: ${shippingAddress.city}`}
+            text={`${(shippingAddress.address, shippingAddress.postalCode)}`}
             icon={
               <Ionicons name="location-sharp" size={30} color={Colors.white} />
             }

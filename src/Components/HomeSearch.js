@@ -3,9 +3,12 @@ import { Box, HStack, Input, Pressable } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Colors from "../color";
+import { useSelector } from "react-redux";
 
 const HomeSearch = () => {
   const navigation = useNavigation();
+  const { cartItems } = useSelector((state) => state.cart);
+
   return (
     <HStack
       space={3}
@@ -42,7 +45,7 @@ const HomeSearch = () => {
             fontSize: "11px",
           }}
         >
-          1
+          {cartItems.length}
         </Box>
       </Pressable>
     </HStack>

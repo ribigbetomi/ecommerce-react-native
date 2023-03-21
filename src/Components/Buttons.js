@@ -1,23 +1,28 @@
-import { Button } from "native-base";
+import { Button, Center } from "native-base";
 import React from "react";
 
-function Buttons({ mt, bg, color, children, onPress }) {
+function Buttons({ mt, mb, bg, color, children, onPress, disabled = false }) {
   return (
-    <Button
-      w="full"
-      h={55}
-      mt={mt}
-      bg={bg}
-      rounded="full"
-      _text={{
-        color: color,
-        fontWeight: "bold",
-      }}
-      _pressed={{ bg: bg }}
-      onPress={onPress}
-    >
-      {children}
-    </Button>
+    <Center>
+      <Button
+        w="90%"
+        h={55}
+        mt={mt}
+        mx="2px"
+        bg={bg}
+        mb={mb}
+        rounded="full"
+        disabled={disabled}
+        _text={{
+          color: color,
+          fontWeight: "bold",
+        }}
+        _pressed={{ bg: bg }}
+        onPress={onPress}
+      >
+        {children}
+      </Button>
+    </Center>
   );
 }
 

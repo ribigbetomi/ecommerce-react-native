@@ -12,13 +12,17 @@ import {
 } from "native-base";
 import Colors from "../color";
 import Products from "../data/products";
+import { useSelector } from "react-redux";
 
 const OrderTerm = () => {
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
-      data={Products}
-      keyExtractor={(item) => item._id}
+      data={cartItems}
+      keyExtractor={(item) => item.product}
       renderItem={({ item }) => (
         <Pressable>
           <Box mb={3}>
@@ -43,7 +47,7 @@ const OrderTerm = () => {
                   {item.name}
                 </Text>
                 <Text bold color={Colors.lightBlack}>
-                  ${item.price}
+                  &#8358;{item.price}
                 </Text>
               </VStack>
               <Center>
@@ -52,7 +56,7 @@ const OrderTerm = () => {
                   _pressed={{ bg: Colors.main }}
                   color={Colors.white}
                 >
-                  5
+                  {item.qty}
                 </Button>
               </Center>
             </HStack>
