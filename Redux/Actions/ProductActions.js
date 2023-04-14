@@ -19,10 +19,12 @@ export const listProduct =
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
+      console.log(keyword, "keyword");
+      // console.log("DAMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
       const { data } = await axios.get(
         `${url}/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
       );
-
+      // console.log(JSON.stringify(data, null, 2), "data");
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({

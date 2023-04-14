@@ -20,25 +20,26 @@ const Tabs = () => {
     { key: "second", title: "ORDERS" },
   ]);
 
-  //   const renderTabBar = (props) => (
-  //     <TabBar
-  //       {...props}
-  //       tabStyle={style.tabStyle}
-  //       indicatorStyle={{ backgroundColor: Colors.black }}
-  //       activeColor={Colors.main}
-  //       inactiveColor={Colors.white}
-  //       renderLabel={({ route, color }) => (
-  //         <Text style={{ color, ...style.text }}>{route.title}</Text>
-  //       )}
-  //     />
-  //   );
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      // tabStyle={style.tabStyle}
+      style={{ backgroundColor: Colors.white }}
+      indicatorStyle={{ backgroundColor: Colors.black }}
+      activeColor={Colors.black}
+      inactiveColor={Colors.lightBlack}
+      renderLabel={({ route, color }) => (
+        <Text style={{ color, ...style.text }}>{route.title}</Text>
+      )}
+    />
+  );
   return (
     <TabView
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
-      //   renderTabBar={renderTabBar}
+      renderTabBar={renderTabBar}
     />
   );
 };

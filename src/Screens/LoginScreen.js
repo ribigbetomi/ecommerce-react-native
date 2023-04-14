@@ -111,11 +111,21 @@ function LoginScreen({ route }) {
         >
           LOGIN
         </Button>
-        <Pressable onPress={() => navigation.navigate("Register")}>
-          <Text color={Colors.white} fontWeight="bold" fontSize="lg">
-            SIGN UP
-          </Text>
-        </Pressable>
+        {/* <Pressable bg={"black"} > */}
+        <Button
+          _pressed={{
+            bg: "black",
+            opacity: 0.5,
+          }}
+          my={30}
+          w="40%"
+          rounded={50}
+          bg={"black"}
+          onPress={() => navigation.navigate("Register")}
+        >
+          SIGN UP
+        </Button>
+        {/* </Pressable> */}
       </Box>
     </Box>
   );

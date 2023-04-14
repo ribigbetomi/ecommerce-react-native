@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
+  Center,
   Flex,
   Heading,
   Image,
   Pressable,
   ScrollView,
   Text,
+  View,
 } from "native-base";
 
 import { useNavigation } from "@react-navigation/native";
@@ -19,21 +21,35 @@ import Message from "./loadingError/Error";
 import Loading from "./loadingError/Loading";
 import Currency from "react-currency-formatter";
 
-const HomeProduct = () => {
+const HomeProduct = ({ keyword }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  console.log(keyword, "keykey");
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
+  // console.log(JSON.stringify(products, null, 2), "products");
   useEffect(() => {
-    dispatch(listProduct());
-  }, []);
+    dispatch(listProduct(keyword));
+  }, [keyword]);
   // console.log(products);
   return (
     <>
       {error && <Message variant={Colors.red}>{error} </Message>}
       {loading && <Loading />}
+      {keyword && products.length === 0 && (
+        <Center flex={1}>
+          <Image
+            source={require("../../assets/oops.jpg")}
+            alt="Oops"
+            resizeMode="cover"
+            w={120}
+            h={50}
+          />
+          <Text pt={10}>Sorry, no product found with this search keyword</Text>
+        </Center>
+      )}
       {products && (
         <ScrollView
           flex={1}

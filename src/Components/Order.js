@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Text, ScrollView, Pressable, HStack, Button } from "native-base";
+import {
+  Text,
+  ScrollView,
+  Pressable,
+  HStack,
+  Button,
+  Center,
+} from "native-base";
 import { Box } from "native-base";
 import Colors from "./../color";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,18 +19,18 @@ const Order = () => {
   const dispatch = useDispatch();
 
   const { loading, error, orders } = useSelector((state) => state.orderListMy);
-  // console.log(orders, "ord");
+  console.log(orders?.length, "ord");
   useEffect(() => {
     dispatch(listMyOrders());
   }, []);
 
   return (
-    <Box w="full" bg={Colors.white} pt={5}>
+    <Box w="full" bg={Colors.white} flex={1} pt={5}>
       {error && <Message variant={Colors.red}>{error} </Message>}
       {loading && <Loading />}
       {orders && (
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* Paind Orders */}
+          {/* Orders */}
           {orders.map((order) => (
             <Pressable key={order._id}>
               <HStack

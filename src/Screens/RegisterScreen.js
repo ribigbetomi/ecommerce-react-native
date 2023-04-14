@@ -137,11 +137,19 @@ function RegisterScreen({ navigation }) {
         >
           SIGN UP
         </Button>
-        <Pressable onPress={() => navigation.navigate("Login")} mt={4}>
-          <Text color={Colors.white} fontWeight="bold" fontSize="lg">
-            LOGIN
-          </Text>
-        </Pressable>
+        <Button
+          _pressed={{
+            bg: "black",
+            opacity: 0.5,
+          }}
+          my={30}
+          w="40%"
+          rounded={50}
+          bg={"black"}
+          onPress={() => navigation.navigate("Login")}
+        >
+          LOGIN
+        </Button>
       </Box>
       {/* </Center> */}
     </Box>

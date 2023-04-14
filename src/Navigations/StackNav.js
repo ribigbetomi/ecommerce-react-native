@@ -17,7 +17,11 @@ const StackNav = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        initialParams={{ keyword: "" }}
+      />
       <Stack.Screen name="Single" component={SingleProductScreen} />
       <Stack.Screen name="Shipping" component={ShoppingScreen} />
       <Stack.Screen name="CheckOut" component={PaymentScreen} />

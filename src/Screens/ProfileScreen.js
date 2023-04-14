@@ -7,6 +7,7 @@ import { getUserDetails } from "../../Redux/Actions/UserActions";
 import moment from "moment";
 import Loading from "../Components/loadingError/Loading";
 import Message from "../Components/loadingError/Error";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -28,15 +29,14 @@ const ProfileScreen = () => {
         {loading && <Loading />}
         {user && (
           <>
-            <Image
-              source={{
-                uri: "https://res.cloudinary.com/zpune/image/upload/v1644396418/random/11_dzj0un.png",
-              }}
+            {/* <Image
+              source={require("../../assets/default-avatar.jpg")}
               alt="profile Image"
               w={24}
               h={24}
               resizeMode="cover"
-            />
+            /> */}
+            <FontAwesome5 name="user" size={30} color="#fff" />
             <Heading bold fontSize={15} isTruncated my={2} color={Colors.white}>
               {user.name.toUpperCase()}
             </Heading>
