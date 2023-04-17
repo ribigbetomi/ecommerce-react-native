@@ -24,7 +24,7 @@ import Currency from "react-currency-formatter";
 const HomeProduct = ({ keyword }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  console.log(keyword, "keykey");
+  // console.log(keyword, "keykey");
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -38,7 +38,7 @@ const HomeProduct = ({ keyword }) => {
     <>
       {error && <Message variant={Colors.red}>{error} </Message>}
       {loading && <Loading />}
-      {keyword && products.length === 0 && (
+      {keyword && products.length === 0 && !loading && (
         <Center flex={1}>
           <Image
             source={require("../../assets/oops.jpg")}

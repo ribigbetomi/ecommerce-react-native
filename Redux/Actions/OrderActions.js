@@ -9,8 +9,12 @@ import {
   ORDER_LIST_MY_FAIL,
   ORDER_LIST_MY_REQUEST,
   ORDER_LIST_MY_SUCCESS,
+  ORDER_PAY_FAIL,
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
+  PAYMENT_INTENT_FAIL,
+  PAYMENT_INTENT_REQUEST,
+  PAYMENT_INTENT_SUCCESS,
 } from "../Constants/OrderConstants";
 import { CART_CLEAR_ITEMS } from "./../Constants/CartConstants";
 import { ORDER_CREATE_FAIL } from "./../Constants/OrderConstants";
@@ -170,7 +174,93 @@ export const payOrderr = (orderId, reference) => async (dispatch, getState) => {
     }
 
     dispatch({
-      type: ORDER_CREATE_FAIL,
+      type: ORDER_PAY_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//  ORDER PAY STRIPE
+export const payOrderStripe = (orderId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ORDER_PAY_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        authorization: `Bearer ${userInfo.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(
+      `${url}/api/orders/stripe/${orderId}`,
+      {},
+      config
+    );
+    // console.log(data, "payOrderr");
+
+    dispatch({ type: ORDER_PAY_SUCCESS });
+    // navigation.navigate("Order", orderId);
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    if (message === "Not authorized, token failed") {
+      // console.log(message);
+      dispatch(logout());
+    }
+
+    dispatch({
+      type: ORDER_PAY_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//  PAYMENT INTENT STRIPE
+export const paymentIntent = (amount) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PAYMENT_INTENT_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        authorization: `Bearer ${userInfo.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(
+      `${url}/api/orders/intent/stripe`,
+      amount,
+      config
+    );
+    // console.log(data, "payOrderr");
+
+    dispatch({ type: PAYMENT_INTENT_SUCCESS, payload: data });
+    // navigation.navigate("Order", orderId);
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    if (message === "Not authorized, token failed") {
+      // console.log(message);
+      dispatch(logout());
+    }
+
+    dispatch({
+      type: PAYMENT_INTENT_FAIL,
       payload: message,
     });
   }

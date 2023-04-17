@@ -10,7 +10,7 @@ import HomeSearch from "../Components/HomeSearch";
 function HomeScreen() {
   const route = useRoute();
   const { keyword } = route.params;
-  console.log(keyword);
+  // console.log(keyword);
   return (
     <Box flex={1} bg={Colors.subGreen}>
       <HomeSearch />

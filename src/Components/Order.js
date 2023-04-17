@@ -19,7 +19,7 @@ const Order = () => {
   const dispatch = useDispatch();
 
   const { loading, error, orders } = useSelector((state) => state.orderListMy);
-  console.log(orders?.length, "ord");
+  // console.log(orders?.length, "ord");
   useEffect(() => {
     dispatch(listMyOrders());
   }, []);

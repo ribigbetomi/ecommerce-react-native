@@ -88,6 +88,38 @@ const PaymentScreen = ({ navigation }) => {
                 )}
               </HStack>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => setPaymentMethod("Stripe")}>
+              <HStack
+                alignItems="center"
+                justifyContent="space-between"
+                mt={5}
+                px={1}
+                py={1}
+                rounded={10}
+                bg={Colors.white}
+              >
+                <Image
+                  source={require("../../assets/stripe.png")}
+                  alt="Paystack"
+                  resizeMode="contain"
+                  w={120}
+                  h={50}
+                />
+                {paymentMethod === "Stripe" ? (
+                  <Ionicons
+                    name="checkmark-circle"
+                    size={30}
+                    color={Colors.main}
+                  />
+                ) : (
+                  <FontAwesome
+                    name="circle-thin"
+                    size={30}
+                    color={Colors.main}
+                  />
+                )}
+              </HStack>
+            </TouchableOpacity>
             {/* // ))} */}
             <Buttons
               color={Colors.white}
@@ -97,9 +129,9 @@ const PaymentScreen = ({ navigation }) => {
             >
               CONTINUE
             </Buttons>
-            <Text italic textAlign="center">
+            {/* <Text italic textAlign="center">
               Payment Method IS <Text bold>Paystack</Text> by default
-            </Text>
+            </Text> */}
           </VStack>
         </ScrollView>
       </Box>

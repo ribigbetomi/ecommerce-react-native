@@ -42,7 +42,7 @@ const PlaceOrderModel = () => {
 
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   // console.log(itemsPrice);
-  const shippingPrice = (0.2 * itemsPrice).toFixed(0);
+  const shippingPrice = (0.2 * itemsPrice).toFixed(2);
   const totalPrice = Number(itemsPrice) + Number(shippingPrice);
   // console.log(shippingPrice, "shipping");
   // console.log(itemsPrice, "items");

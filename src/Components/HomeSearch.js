@@ -10,7 +10,7 @@ const HomeSearch = () => {
   const { cartItems } = useSelector((state) => state.cart);
 
   const [keyword, setKeyword] = useState("");
-  console.log(keyword, "key");
+  // console.log(keyword, "key");
 
   const submitHandler = () => {
     // if (keyword) {

@@ -18,6 +18,7 @@ import {
   orderDetailsReducer,
   orderListMyReducer,
   orderPayReducer,
+  paymentIntentReducer,
 } from "./Reducers/OrderReducers";
 
 const reducer = combineReducers({
@@ -33,6 +34,7 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
+  paymentIntent: paymentIntentReducer,
 });
 
 //  Cart Items
